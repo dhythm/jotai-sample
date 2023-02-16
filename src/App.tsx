@@ -1,8 +1,16 @@
 import reactLogo from './assets/react.svg'
 import './App.css'
 import { Counter } from './Counter'
-import { Provider } from 'jotai'
+import { atom, Provider, useAtom } from 'jotai'
 import { IncrementalCounter } from './IncrementalCounter'
+import { simpleStore } from './stores'
+import { FC } from 'react'
+
+const localAtom = atom(0)
+simpleStore.set(localAtom, 1)
+simpleStore.sub(localAtom, () => {
+  console.log('localAtom value is changed to', simpleStore.get(localAtom))
+})
 
 function App() {
   return (
@@ -25,11 +33,28 @@ function App() {
           <Counter />
         </Provider>
         <IncrementalCounter incrementAmount={2} initialValue={5} />
+        <Provider store={simpleStore}>
+          <Local />
+        </Provider>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
     </div>
+  )
+}
+
+const Local: FC = () => {
+  const [value, setValue] = useAtom(localAtom)
+
+  return (
+    <button
+      onClick={() => {
+        setValue(value + 1)
+      }}
+    >
+      click me!
+    </button>
   )
 }
 
