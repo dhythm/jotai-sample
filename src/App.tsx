@@ -2,6 +2,7 @@ import reactLogo from './assets/react.svg'
 import './App.css'
 import { Counter } from './Counter'
 import { Provider } from 'jotai'
+import { IncrementalCounter } from './IncrementalCounter'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Provider>
           <Counter />
         </Provider>
+        <IncrementalCounter incrementAmount={2} initialValue={5} />
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
