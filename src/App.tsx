@@ -5,6 +5,7 @@ import { atom, Provider, useAtom } from 'jotai'
 import { IncrementalCounter } from './IncrementalCounter'
 import { simpleStore } from './stores'
 import { FC } from 'react'
+import { IndependentJotai } from './IndependentJotai'
 
 const localAtom = atom(0)
 simpleStore.set(localAtom, 1)
@@ -24,6 +25,9 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+      <div className="card">
+        <IndependentJotai />
+      </div>
       <div className="card">
         <Counter />
         <p>
