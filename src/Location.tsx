@@ -1,41 +1,31 @@
 import { useAtom } from 'jotai/react'
 import { atomWithLocation } from 'jotai-location'
-import { useLocation, useSearchParams, Link } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 
 const locationAtom = atomWithLocation()
 
 export const Location = () => {
   const [loc, setLoc] = useAtom(locationAtom)
   const location = useLocation()
-  const [searchParams] = useSearchParams()
 
   return (
-    <div>
-      <p>pathname(react-router-dom): {location.pathname}</p>
-      <p>search(react-router-dom): {location.search}</p>
-      <p>pathname(jotai-location){loc.pathname}</p>
-      <p>parameter(jotai-location): {loc.searchParams?.get('foo')}</p>
+    <div style={{ padding: 8 }}>
+      <h2>react-router-dom</h2>
+      <p>pathname: {location.pathname}</p>
+      <p>search: {location.search}</p>
+
+      <h2>jotai-location</h2>
+      <p>pathname: {loc.pathname}</p>
+      <p>parameter: {loc.searchParams?.get('foo')}</p>
+
       <ul>
         <li>
           <button
             onClick={() => {
-              setLoc((prev) => ({ pathname: '/' }))
+              setLoc(() => ({ pathname: '/' }))
             }}
           >
-            /
-          </button>
-        </li>
-        <li>
-          <button
-            onClick={() => {
-              setLoc((prev) => ({
-                ...prev,
-                pathname: '/location',
-                searchParams: new URLSearchParams()
-              }))
-            }}
-          >
-            /location
+            home
           </button>
         </li>
         <li>
@@ -48,11 +38,24 @@ export const Location = () => {
               }))
             }}
           >
-            /location?foo=1
+            foo=1
           </button>
         </li>
         <li>
-          <Link to="/">/</Link>
+          <button
+            onClick={() => {
+              setLoc((prev) => ({
+                ...prev,
+                pathname: '/location',
+                searchParams: new URLSearchParams([['foo', '2']])
+              }))
+            }}
+          >
+            foo=2
+          </button>
+        </li>
+        <li>
+          <Link to="/">home</Link>
         </li>
         <li>
           <Link to="/location">/location</Link>
@@ -62,6 +65,16 @@ export const Location = () => {
         </li>
         <li>
           <Link to="/location?bar=2">/location?bar=2</Link>
+        </li>
+        <li>
+          <button onClick={() => { window.location.replace('/location?foo=1'); }}>
+            foo=1
+          </button>
+        </li>
+        <li>
+          <button onClick={() => { window.location.replace('/location?foo=2'); }}>
+            foo=2
+          </button>
         </li>
       </ul>
     </div>
