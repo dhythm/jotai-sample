@@ -1,0 +1,22 @@
+name: "npm-cache"
+description: "cache node_modules for npm"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        registry-url: "https://npm.pkg.github.com"
+        scope: "@dhythm"
+
+    - uses: actions/cache@v3
+      id: node_modules_cache_id
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: "**/node_modules"
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+    - if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
+      shell: bash
+      run: npm install

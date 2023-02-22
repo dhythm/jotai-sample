@@ -17,7 +17,7 @@ simpleStore.sub(localAtom, () => {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/jotai-sample">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/location" element={<Location />} />
