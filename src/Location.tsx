@@ -18,6 +18,10 @@ export const Location = () => {
       <p>pathname: {loc.pathname}</p>
       <p>parameter: {loc.searchParams?.get('foo')}</p>
 
+      <h2>window.location</h2>
+      <p>pathname: {window.location.pathname}</p>
+      <p>search: {window.location.search}</p>
+
       <ul>
         <li>
           <button
@@ -67,12 +71,20 @@ export const Location = () => {
           <Link to="/location?bar=2">/location?bar=2</Link>
         </li>
         <li>
-          <button onClick={() => { window.location.replace('/location?foo=1'); }}>
+          <button
+            onClick={() => {
+              window.location.replace('/location?foo=1')
+            }}
+          >
             foo=1
           </button>
         </li>
         <li>
-          <button onClick={() => { window.location.replace('/location?foo=2'); }}>
+          <button
+            onClick={() => {
+              window.location.replace('/location?foo=2')
+            }}
+          >
             foo=2
           </button>
         </li>
