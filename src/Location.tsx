@@ -1,12 +1,23 @@
 import { useAtom } from 'jotai/react'
 import { atomWithLocation } from 'jotai-location'
 import { useLocation, Link } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const locationAtom = atomWithLocation()
 
 export const Location = () => {
   const [loc, setLoc] = useAtom(locationAtom)
   const location = useLocation()
+
+  useEffect(() => {
+    const cb = () => {
+      console.log('popstate is called!')
+    }
+    window.addEventListener('popstate', cb)
+    return () => {
+      window.removeEventListener('popstate', cb)
+    }
+  }, [])
 
   return (
     <div style={{ padding: 8 }}>
